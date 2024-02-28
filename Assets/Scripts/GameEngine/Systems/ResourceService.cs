@@ -14,12 +14,12 @@ namespace GameEngine
 
         public void SetResources(IEnumerable<Resource> resources)
         {
-            this.sceneResources = resources.ToDictionary(it => it.ID);
+            sceneResources = resources.ToDictionary(it => it.ID);
         }
 
         public IEnumerable<Resource> GetResources()
         {
-            return this.sceneResources.Values;
+            return sceneResources.Values;
         }
     }
 }

@@ -15,46 +15,42 @@ namespace GameEngine
 
         [ShowInInspector, ReadOnly]
         private HashSet<Unit> sceneUnits = new();
-
-        public UnitManager()
-        {
-        }
-
-        public UnitManager(Transform container)
-        {
-            this.container = container;
-        }
         
         public void SetupUnits(IEnumerable<Unit> units)
         {
-            this.sceneUnits = new HashSet<Unit>(units);
-        }
-
-        public void SetContainer(Transform container)
-        {
-            this.container = container;
+            sceneUnits = new HashSet<Unit>(units);
         }
 
         [Button]
         public Unit SpawnUnit(Unit prefab, Vector3 position, Quaternion rotation)
         {
-            var unit = Object.Instantiate(prefab, position, rotation, this.container);
-            this.sceneUnits.Add(unit);
+            var unit = Object.Instantiate(prefab, position, rotation, container);
+            sceneUnits.Add(unit);
             return unit;
         }
 
         [Button]
         public void DestroyUnit(Unit unit)
         {
-            if (this.sceneUnits.Remove(unit))
+            if (sceneUnits.Remove(unit))
             {
                 Object.Destroy(unit.gameObject);
             }
         }
 
+        public void DestroyUnits()
+        {
+            foreach (var unit in sceneUnits)
+            {
+                Object.Destroy(unit.gameObject);
+            }
+            
+            sceneUnits.Clear();
+        }
+
         public IEnumerable<Unit> GetAllUnits()
         {
-            return this.sceneUnits;
+            return sceneUnits;
         }
     }
 }
