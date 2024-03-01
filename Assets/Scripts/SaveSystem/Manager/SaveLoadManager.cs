@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 
 namespace SaveSystem
@@ -9,10 +10,10 @@ namespace SaveSystem
     public sealed class SaveLoadManager
     {
         private IGameRepository _gameRepository;
-        private List<ISaveLoader> _saveLoaders;
+        private IEnumerable<ISaveLoader> _saveLoaders;
 
         [Inject]
-        public void Construct(IGameRepository gameRepository, List<ISaveLoader> saveLoaders)
+        public void Construct(IGameRepository gameRepository, IEnumerable<ISaveLoader> saveLoaders)
         {
             _gameRepository = gameRepository;
             _saveLoaders = saveLoaders;
@@ -31,11 +32,11 @@ namespace SaveSystem
         [Button]
         public void Load()
         {
+            _gameRepository.LoadState();
             foreach (var saveLoader in _saveLoaders)
             {
                 saveLoader.LoadGame();
             }
-            _gameRepository.LoadState();
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Zenject;
 
 namespace GameEngine
 {
@@ -10,16 +11,17 @@ namespace GameEngine
     public sealed class ResourceService
     {
         [ShowInInspector, ReadOnly]
-        private Dictionary<string, Resource> sceneResources = new();
+        private Dictionary<string, Resource> _sceneResources = new();
 
+        [Inject]
         public void SetResources(IEnumerable<Resource> resources)
         {
-            sceneResources = resources.ToDictionary(it => it.ID);
+            _sceneResources = resources.ToDictionary(it => it.ID);
         }
 
         public IEnumerable<Resource> GetResources()
         {
-            return sceneResources.Values;
+            return _sceneResources.Values;
         }
     }
 }

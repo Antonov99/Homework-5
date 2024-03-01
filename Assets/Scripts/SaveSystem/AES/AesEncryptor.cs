@@ -4,9 +4,11 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace SaveSystem
 {
+    [UsedImplicitly]
     public class AesEncryptor
     {
 

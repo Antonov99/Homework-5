@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 using Object = UnityEngine.Object;
 
 namespace GameEngine
@@ -16,6 +17,7 @@ namespace GameEngine
         [ShowInInspector, ReadOnly]
         private HashSet<Unit> sceneUnits = new();
         
+        [Inject]
         public void SetupUnits(IEnumerable<Unit> units)
         {
             sceneUnits = new HashSet<Unit>(units);
