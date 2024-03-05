@@ -102,7 +102,7 @@ namespace SaveSystem
                     }
                 }
             }
-
+            Debug.Log(plaintext);
             return plaintext;
         }
     }

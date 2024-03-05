@@ -9,6 +9,8 @@ public class GameInstaller : MonoInstaller
 {
     [SerializeField] private SaveLoadManager _saveLoadManager;
     [SerializeField] private ResourceService _resourceService;
+    [SerializeField] private UnitManager _unitManager;
+    
     
     public override void InstallBindings()
     {
@@ -16,7 +18,7 @@ public class GameInstaller : MonoInstaller
         Container.BindInterfacesTo<GameRepository>().AsCached();
         Container.Bind<AesEncryptor>().AsSingle().NonLazy();
         Container.Bind<ResourceService>().FromMethod(ServicesBinding).AsSingle().NonLazy();
-        Container.Bind<UnitManager>().AsSingle().NonLazy();
+        Container.Bind<UnitManager>().FromMethod(UnitManagerBinding).AsSingle().NonLazy();
 
         SaveLoadersBinding();
         Container.Bind<IEnumerable<Resource>>().FromMethod(ResourcesBinding).AsSingle().NonLazy();
@@ -41,6 +43,12 @@ public class GameInstaller : MonoInstaller
         return units;
     }
 
+    private UnitManager UnitManagerBinding()
+    {
+        Container.Inject(_unitManager);
+        return _unitManager;
+    }
+    
     private ResourceService ServicesBinding()
     {
         Container.Inject(_resourceService);
